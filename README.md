@@ -20,9 +20,8 @@ uv tool install mkdocs --with mkdocs-material --with mkdocs-mermaid2-plugin --wi
 cd your-project
 bash <(curl -s https://raw.githubusercontent.com/denniyahh/autwicky/main/install.sh)
 
-# 3. Preview & Deploy
-mkdocs serve -f docs/mkdocs.yml     # local preview
-bash scripts/deploy.sh              # push to GitHub Pages
+# 3. Preview
+mkdocs serve -f docs/mkdocs.yml     # http://localhost:8000
 ```
 
 ## How It Works

@@ -43,21 +43,25 @@ Use ```mermaid code blocks for all diagrams.
 Limit 12 nodes per diagram, use subgraphs for grouping.
 ~~~~
 
-## 5. Deploy to GitHub Pages
-
-```bash
-bash ~/.hermes/templates/project-wiki/scripts/deploy.sh
-```
-
-Builds the site and pushes to the `gh-pages` branch. Automatically configures GitHub Pages to serve from that branch. The site will be live at `https://<user>.github.io/<repo>` within a minute.
-
-For manual build without deploy:
+## 5. Build
 
 ```bash
 mkdocs build -f docs/mkdocs.yml
 ```
 
-Output goes to `site/` (git-ignored).
+Output goes to `site/` (git-ignored). Serve with any static host.
+
+---
+
+## Optional: Deploy to GitHub Pages
+
+If you want to publish your wiki publicly:
+
+```bash
+bash ~/.hermes/templates/project-wiki/scripts/deploy.sh
+```
+
+Builds the site and pushes to the `gh-pages` branch. The site will be live at `https://<user>.github.io/<repo>` within a minute. Requires `gh` CLI for auto-configuration (falls back gracefully without it).
 
 ## Diagram Tips
 
