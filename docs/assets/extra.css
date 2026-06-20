@@ -1,50 +1,62 @@
-/*
- * Expandable Mermaid diagrams.
- * Diagrams render at content width by default.
- * Click to expand to full viewport; click again or press Esc to collapse.
- */
-
-.md-typeset .mermaid {
-    cursor: zoom-in;
-    transition: all 0.3s ease;
-    position: relative;
+/* Mermaid diagram full-screen maximize */
+.mermaid {
+  cursor: pointer;
+  position: relative;
+  transition: opacity 0.2s;
 }
 
-.md-typeset .mermaid svg {
-    max-width: 100%;
-    height: auto;
+.mermaid::after {
+  content: "⛶";
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
 }
 
-/* Fullscreen state */
-.md-typeset .mermaid.expanded {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: var(--md-default-bg-color);
-    padding: 3rem 2rem 2rem 2rem;
-    margin: 0;
-    cursor: zoom-out;
-    overflow: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.mermaid:hover::after {
+  opacity: 0.6;
 }
 
-.md-typeset .mermaid.expanded svg {
-    max-width: 95vw;
-    max-height: 90vh;
-    width: auto !important;
-    height: auto !important;
+.mermaid.maximized {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: var(--md-default-bg-color, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 2rem;
+  cursor: zoom-out;
 }
 
-/* Close hint */
-.md-typeset .mermaid.expanded::before {
-    content: "✕  Click or press Esc to close";
-    position: fixed;
-    top: 0.75rem;
-    right: 1.25rem;
-    font-size: 0.8rem;
-    color: var(--md-default-fg-color--light);
-    z-index: 10001;
-    pointer-events: none;
+.mermaid.maximized svg {
+  max-width: 95vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+}
+
+/* dim backdrop */
+.mermaid-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+.mermaid-backdrop.active {
+  display: block;
+}
+
+/* hide max-width clamp when maximized */
+.mermaid.maximized > svg {
+  max-width: none !important;
 }

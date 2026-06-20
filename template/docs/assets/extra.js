@@ -1,45 +1,48 @@
-/*
- * Click-to-expand Mermaid diagrams to full viewport.
- * Targets the panzoom wrapper which receives user clicks.
- * Toggle via click; close via click or Escape.
- */
-document.addEventListener('DOMContentLoaded', function () {
-    function attachExpand(container) {
-        // The panzoom wrapper (.panzoom-box) is the clickable container
-        const wrapper = container.closest('.panzoom-box') || container;
-        wrapper.style.cursor = 'zoom-in';
+// Mermaid diagram click-to-maximize (full viewport)
+document.addEventListener('DOMContentLoaded', () => {
+  // Create backdrop element
+  const backdrop = document.createElement('div');
+  backdrop.className = 'mermaid-backdrop';
+  document.body.appendChild(backdrop);
 
-        wrapper.addEventListener('click', function (e) {
-            // Don't intercept panzoom button clicks
-            if (e.target.closest('.panzoom-button, .panzoom-controls button')) return;
-            container.classList.toggle('expanded');
-            wrapper.style.cursor = container.classList.contains('expanded') ? 'zoom-out' : 'zoom-in';
-        });
+  function maximizeDiagram(el) {
+    el.classList.add('maximized');
+    backdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function minimizeDiagram(el) {
+    el.classList.remove('maximized');
+    backdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Delegate clicks on Mermaid diagrams
+  document.addEventListener('click', (e) => {
+    const mermaidEl = e.target.closest('.mermaid');
+    if (!mermaidEl) return;
+
+    // If we click an already-maximized diagram, minimize it
+    if (mermaidEl.classList.contains('maximized')) {
+      minimizeDiagram(mermaidEl);
+      return;
     }
 
-    // Attach to all mermaid diagrams, retry for async loading
-    function init() {
-        document.querySelectorAll('.md-typeset .mermaid').forEach(function (el) {
-            if (!el.dataset.expandAttached) {
-                el.dataset.expandAttached = '1';
-                attachExpand(el);
-            }
-        });
+    // Maximize
+    maximizeDiagram(mermaidEl);
+  });
+
+  // Esc key to exit
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const maximized = document.querySelector('.mermaid.maximized');
+      if (maximized) minimizeDiagram(maximized);
     }
+  });
 
-    init();
-    // Retry after mermaid renders (mermaid2 loads async)
-    setTimeout(init, 1000);
-    setTimeout(init, 3000);
-
-    // Esc key closes any expanded diagram
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.md-typeset .mermaid.expanded').forEach(function (el) {
-                el.classList.remove('expanded');
-                const wrapper = el.closest('.panzoom-box');
-                if (wrapper) wrapper.style.cursor = 'zoom-in';
-            });
-        }
-    });
+  // Click backdrop to exit
+  backdrop.addEventListener('click', () => {
+    const maximized = document.querySelector('.mermaid.maximized');
+    if (maximized) minimizeDiagram(maximized);
+  });
 });

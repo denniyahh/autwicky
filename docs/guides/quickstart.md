@@ -33,7 +33,7 @@ Open http://localhost:8000.
 
 Ask an LLM to populate the stub pages:
 
-```
+~~~~
 Analyze this codebase and populate docs/ with:
 - architecture/overview.md — component structure, design principles
 - diagrams/system.md — C4 context diagram + key flow diagrams
@@ -41,7 +41,7 @@ Analyze this codebase and populate docs/ with:
 
 Use ```mermaid code blocks for all diagrams.
 Limit 12 nodes per diagram, use subgraphs for grouping.
-```
+~~~~
 
 ## 5. Build
 

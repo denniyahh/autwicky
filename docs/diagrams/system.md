@@ -40,7 +40,7 @@ sequenceDiagram
 ```mermaid
 flowchart LR
     subgraph Source
-        MD["```mermaid<br/>C4Context<br/>  Person(...)<br/>```"]
+        MD["Mermaid source<br/>C4Context, Person(...)<br/>flowcharts, sequences"]
     end
 
     subgraph "MkDocs Processing"
@@ -52,7 +52,7 @@ flowchart LR
     subgraph "Browser"
         SVG["SVG rendered"]
         PZ["panzoom<br/>scroll-zoom + drag-pan"]
-        EX["extra.js<br/>click → .expanded class"]
+        EX["extra.js<br/>click to expand"]
     end
 
     MD --> SF --> M2 --> CFG --> SVG --> PZ --> EX

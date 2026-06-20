@@ -92,6 +92,20 @@ echo "   ✓ architecture/overview.md"
 echo "   ✓ diagrams/system.md"
 echo "   ✓ guides/quickstart.md"
 
+# Validate: every file referenced in mkdocs.yml must exist
+echo ""
+echo "🔍 Validating scaffold..."
+FAILED=0
+for rel in $(grep -oE 'assets/[^"'"'"']+' "$DOCS_DIR/mkdocs.yml" 2>/dev/null); do
+  if [ ! -f "$DOCS_DIR/$rel" ]; then
+    echo "   ❌ MISSING: $rel"
+    FAILED=1
+  fi
+done
+if [ "$FAILED" -eq 0 ]; then
+  echo "   ✓ All referenced assets present"
+fi
+
 echo ""
 echo "✅ Wiki scaffolded at $DOCS_DIR/"
 echo ""
