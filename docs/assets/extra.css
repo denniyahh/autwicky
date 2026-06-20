@@ -1,0 +1,50 @@
+/*
+ * Expandable Mermaid diagrams.
+ * Diagrams render at content width by default.
+ * Click to expand to full viewport; click again or press Esc to collapse.
+ */
+
+.md-typeset .mermaid {
+    cursor: zoom-in;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.md-typeset .mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Fullscreen state */
+.md-typeset .mermaid.expanded {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--md-default-bg-color);
+    padding: 3rem 2rem 2rem 2rem;
+    margin: 0;
+    cursor: zoom-out;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.md-typeset .mermaid.expanded svg {
+    max-width: 95vw;
+    max-height: 90vh;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Close hint */
+.md-typeset .mermaid.expanded::before {
+    content: "✕  Click or press Esc to close";
+    position: fixed;
+    top: 0.75rem;
+    right: 1.25rem;
+    font-size: 0.8rem;
+    color: var(--md-default-fg-color--light);
+    z-index: 10001;
+    pointer-events: none;
+}
